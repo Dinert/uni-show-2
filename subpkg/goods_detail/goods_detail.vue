@@ -1,6 +1,6 @@
 <template>
 	<view>
-		哈哈哈暮云春树af
+		商品详情
 	</view>
 </template>
 

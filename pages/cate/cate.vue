@@ -1,5 +1,6 @@
 <template>
 	<view class="cate">
+		<uni-my-search @search-click="gotoSearch"></uni-my-search>
 		<view class="cate-container">
 			<scroll-view class="cate-container-left" scroll-y="true" :style="{height: wh + 'px'}">
 				<block v-for="(item, index) in cateList" :key="item.cat_id">
@@ -31,7 +32,7 @@
 	export default {
 		async onLoad() {
 			const sysInfo = uni.getSystemInfoSync()
-			this.wh = sysInfo.windowHeight
+			this.wh = sysInfo.windowHeight - 50
 			await this.changeCateListData()
 			this.changeCateLevel2()
 			this.changeRightScrollTop()
@@ -79,6 +80,13 @@
 				uni.navigateTo({
 					url: '/subpkg/goods_list/goods_list?id=' + item.cat_id
 				})
+			},
+
+			// 跳转到搜索
+			gotoSearch() {
+				uni.navigateTo({
+					url: '/subpkg/search/search'
+				})
 			}
 		}
 	}
@@ -90,7 +98,7 @@
 
 		&-container {
 			display: flex;
-			height: 100%;
+			height: calc(100% - 100rpx);
 
 
 			&-left {

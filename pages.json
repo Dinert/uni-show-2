@@ -40,7 +40,14 @@
 		}, {
 			"path": "goods_list/goods_list",
 			"style": {
-				"navigationBarTitleText": "商品详情",
+				"navigationBarTitleText": "商品列表",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "search/search",
+			"style": {
+				"navigationBarTitleText": "搜索",
 				"enablePullDownRefresh": false
 			}
 
@@ -75,7 +82,8 @@
 	"easycom": {
 		"autoscan": true,
 		"custom": {
-			"uni-^(.*)": "@/components/uni-$1/uni-$1.vue"
+			"uni-^(.*)": "@/components/uni-$1/uni-$1.vue",
+			"uni-^(.*)": "@/base-ui/uni-$1/uni-$1.vue"
 		}
 	}
 }

@@ -18,4 +18,10 @@
 	page {
 		height: 100%;
 	}
+
+	.ceiling {
+		position: sticky;
+		top: 0;
+		z-index: 999;
+	}
 </style>
