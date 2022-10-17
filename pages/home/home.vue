@@ -9,9 +9,10 @@
 
 <script>
 	export default {
+		async onLoad() {
+		},
 		data() {
 			return {
-
 			}
 		},
 		methods: {
@@ -25,5 +26,8 @@
 </script>
 
 <style lang="scss">
-
+.home{
+	height: 100%;
+	overflow-y: auto;
+}
 </style>
