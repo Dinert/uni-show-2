@@ -29,7 +29,13 @@
 </template>
 
 <script>
+	import {
+		mapMutations
+	} from 'vuex'
 	export default {
+		onShow() {
+			this.SET_TABBARBADGE()
+		},
 		async onLoad() {
 			const sysInfo = uni.getSystemInfoSync()
 			this.wh = sysInfo.windowHeight - 50
@@ -47,6 +53,7 @@
 			}
 		},
 		methods: {
+			...mapMutations('cart', ['SET_TABBARBADGE']),
 			ajaxCateListData() {
 				return uni.$http.get('/api/public/v1/categories')
 			},

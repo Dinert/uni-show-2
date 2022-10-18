@@ -19,7 +19,7 @@
 		<rich-text :nodes="goodsDetail.goods_introduce"></rich-text>
 
 		<view class="goodsDetail-bottom">
-			<uni-goods-nav :fill="true" :options="options" :button-group="buttonGroup" @click="onClick"
+			<uni-goods-nav :fill="true" :options="getCartList" :button-group="getCartButtonGroupList" @click="onClick"
 				@buttonClick="buttonClick" />
 		</view>
 
@@ -27,38 +27,27 @@
 </template>
 
 <script>
+	import {
+		mapGetters,
+		mapMutations
+	} from 'vuex'
 	export default {
 		onLoad(options) {
 			this.params.id = options.goods_id
 			this.changeGoodsDetail()
+			this.changeCartInfo()
 		},
 		data() {
 			return {
 				goodsDetail: {},
-				params: {},
-				options: [{
-					icon: 'shop',
-					text: '店铺',
-					infoColor: "red"
-				}, {
-					icon: 'cart',
-					text: '购物车',
-					info: 9
-				}],
-				buttonGroup: [{
-						text: '加入购物车',
-						backgroundColor: '#ff0000',
-						color: '#fff'
-					},
-					{
-						text: '立即购买',
-						backgroundColor: '#ffa200',
-						color: '#fff'
-					}
-				]
+				params: {}
 			};
 		},
+		computed: {
+			...mapGetters('cart', ['getCartList', 'getCartButtonGroupList', 'getCartDataList'])
+		},
 		methods: {
+			...mapMutations('cart', ['SET_CARINFO', 'SET_CARTDATALIST']),
 			ajaxGoodsDetail() {
 				return uni.$http.get('/api/public/v1/goods/detail', {
 					goods_id: this.params.id
@@ -88,6 +77,16 @@
 				})
 			},
 
+			// 改变info
+			changeCartInfo() {
+				const findResult = this.getCartDataList.find(item => item.goods_id === Number(this.params.id))
+				if (findResult === undefined) {
+					this.SET_CARINFO(0)
+				} else {
+					this.SET_CARINFO(findResult.goods_count)
+				}
+			},
+
 			onClick(e) {
 				console.log(e, 'eeee')
 				if (e.content.text === '购物车') {
@@ -98,8 +97,18 @@
 			},
 
 			buttonClick(e) {
-				console.log(e)
-				this.options[2].info++
+				if (e.content.text === '加入购物车') {
+					const goods = {
+						goods_id: this.goodsDetail.goods_id,
+						goods_name: this.goodsDetail.goods_name,
+						goods_price: this.goodsDetail.goods_price,
+						goods_count: 1,
+						goods_small_logo: this.goodsDetail.goods_small_logo,
+						goods_state: true
+					}
+
+					this.SET_CARTDATALIST(goods)
+				}
 			}
 		}
 	}

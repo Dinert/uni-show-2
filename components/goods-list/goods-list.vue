@@ -1,6 +1,6 @@
 <template>
 	<view class="goodsList">
-		<view class="goodsList-item" v-for="item in goodsList" :key="item.cat_id" @click="goToDetail(item)">
+		<view class="goodsList-item" v-for="item in goodsList" :key="item.goods_id" @click="goToDetail(item)">
 			<view class="goodsList-item-left">
 				<image :src="item.goods_small_logo"></image>
 			</view>

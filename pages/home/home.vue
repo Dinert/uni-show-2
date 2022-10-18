@@ -8,14 +8,18 @@
 </template>
 
 <script>
+	import {
+		mapMutations
+	} from 'vuex'
 	export default {
-		async onLoad() {
+		onShow() {
+			this.SET_TABBARBADGE()
 		},
 		data() {
-			return {
-			}
+			return {}
 		},
 		methods: {
+			...mapMutations('cart', ['SET_TABBARBADGE']),
 			gotoSearch() {
 				uni.navigateTo({
 					url: '/subpkg/search/search'
@@ -26,8 +30,8 @@
 </script>
 
 <style lang="scss">
-.home{
-	height: 100%;
-	overflow-y: auto;
-}
+	.home {
+		height: 100%;
+		overflow-y: auto;
+	}
 </style>
