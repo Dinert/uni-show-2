@@ -1,6 +1,6 @@
 <template>
 	<view class="goodsList">
-		<view class="goodsList-item" v-for="item in goodsList" :key="item.cat_id">
+		<view class="goodsList-item" v-for="item in goodsList" :key="item.cat_id" @click="goToDetail(item)">
 			<view class="goodsList-item-left">
 				<image :src="item.goods_small_logo"></image>
 			</view>
@@ -15,11 +15,18 @@
 </template>
 
 <script>
-	export default{
+	export default {
 		props: {
 			goodsList: {
 				type: Array,
 				default: () => ([])
+			}
+		},
+		methods: {
+			goToDetail(goods) {
+				uni.navigateTo({
+					url: '/subpkg/goods_detail/goods_detail?goods_id=' + goods.goods_id
+				})
 			}
 		},
 		filters: {

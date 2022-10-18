@@ -11,9 +11,16 @@
 
 			this.changeGoodsList()
 		},
-
+		async onPullDownRefresh() {
+			this.params.pagenum = 1
+			this.total = 0
+			this.isLoading = false
+			this.goodsList = []
+			await this.changeGoodsList()
+			uni.stopPullDownRefresh()
+		},
 		async onReachBottom() {
-			if(this.params.pagenum * this.params.pagesize >= this.total) {
+			if (this.params.pagenum * this.params.pagesize >= this.total) {
 				return uni.showToast({
 					title: '数据加载完成',
 					icon: 'none'
