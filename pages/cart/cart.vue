@@ -1,12 +1,18 @@
 <template>
 	<view class="cart">
-		<view class="cart-title">
-			<uni-icons type="shop" size="18"></uni-icons>
-			<text class="cart-title-text">购物车</text>
+		<view class="cart-address">
+			<cart-address></cart-address>
 		</view>
 		<view class="cart-body">
-			<cart-goods-list :goodsList="getCartDataList"></cart-goods-list>
+			<view class="cart-body-title">
+				<uni-icons type="shop" size="18"></uni-icons>
+				<text class="cart-body-title-text">购物车</text>
+			</view>
+			<view class="cart-body-body">
+				<cart-goods-list></cart-goods-list>
+			</view>
 		</view>
+
 	</view>
 </template>
 
@@ -24,9 +30,6 @@
 
 			};
 		},
-		computed: {
-			...mapGetters('cart', ['getCartDataList'])
-		},
 		methods: {
 			...mapMutations('cart', ['SET_TABBARBADGE']),
 		}
@@ -36,19 +39,37 @@
 <style lang="scss">
 	.cart {
 		height: 100%;
-		overflow-y: auto;
-
-		&-title {
-			height: 80rpx;
+		display: flex;
+		flex-direction: column;
+		
+		&-address{
+		}
+		
+		&-body{
+			flex: 1;
 			display: flex;
-			align-items: center;
-			padding-left: 10rpx;
-			border-bottom: 1px solid #efefef;
-
-			&-text {
-				font-size: 28rpx;
-				margin-left: 20rpx;
+			flex-direction: column;
+			height: 0;
+			&-title {
+				height: 80rpx;
+				display: flex;
+				align-items: center;
+				padding-left: 10rpx;
+				border-bottom: 1px solid #efefef;
+			
+				&-text {
+					font-size: 28rpx;
+					margin-left: 20rpx;
+				}
+			}
+			
+			&-body{
+				height: 0;
+				flex: 1;
+				overflow-y: auto;
 			}
 		}
+
+		
 	}
 </style>

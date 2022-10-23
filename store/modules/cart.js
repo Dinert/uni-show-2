@@ -21,7 +21,11 @@ export default {
 				color: '#fff'
 			}
 		],
-		cartDataList: JSON.parse(uni.getStorageSync('cartDataList') || '[]')
+		cartDataList: JSON.parse(uni.getStorageSync('cartDataList') || '[]'),
+		
+		// 收货地址
+		address: {
+		}, 
 	},
 	getters: {
 		getCartList(state) {
@@ -42,6 +46,10 @@ export default {
 			})
 
 			return total
+		},
+		
+		getAddress(state) {
+			return state.address
 		}
 	},
 	mutations: {
@@ -80,6 +88,17 @@ export default {
 			findResult.goods_count = pyload.goods_count
 
 			uni.setStorageSync('cartDataList', JSON.stringify(state.cartDataList))
+			this.commit('cart/SET_TABBARBADGE')
+		},
+		
+		DELETE_CARTDATALIST(state, pyload) {
+			state.cartDataList = state.cartDataList.filter(item => {
+				return item.goods_id !== pyload.goods_id
+			})
+			
+			uni.setStorageSync('cartDataList', JSON.stringify(state.cartDataList))
+			
+			this.commit('cart/SET_TABBARBADGE')
 		}
 
 

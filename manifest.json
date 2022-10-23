@@ -56,7 +56,12 @@
             "postcss" : false,
             "es6" : true
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "申请微信小程序接口"
+            }
+        }
     },
     "mp-alipay" : {
         "usingComponents" : true
