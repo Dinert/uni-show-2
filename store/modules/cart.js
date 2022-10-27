@@ -22,10 +22,11 @@ export default {
 			}
 		],
 		cartDataList: JSON.parse(uni.getStorageSync('cartDataList') || '[]'),
-		
+
 		// 收货地址
-		address: {
-		}, 
+		address: JSON.parse(uni.getStorageSync('address') || '{}'),
+
+		selectAll: JSON.parse(uni.getStorageSync('selectAll') || true),
 	},
 	getters: {
 		getCartList(state) {
@@ -47,9 +48,31 @@ export default {
 
 			return total
 		},
-		
+
 		getAddress(state) {
 			return state.address
+		},
+
+		getCheckedCount(state) {
+			let result = 0
+			state.cartDataList.forEach(item => {
+				if (item.goods_state) {
+					result += ((item.goods_count * item.goods_price) || 0)
+				}
+			})
+			return result
+		},
+
+		getCountAll(state) {
+			let result = 0
+			state.cartDataList.forEach(item => {
+				result += ((item.goods_count * item.goods_price) || 0)
+			})
+			return result
+		},
+
+		getSelectAll(state, getters) {
+			return state.selectAll && getters.getCountAll === getters.getCheckedCount
 		}
 	},
 	mutations: {
@@ -90,15 +113,32 @@ export default {
 			uni.setStorageSync('cartDataList', JSON.stringify(state.cartDataList))
 			this.commit('cart/SET_TABBARBADGE')
 		},
-		
+
 		DELETE_CARTDATALIST(state, pyload) {
 			state.cartDataList = state.cartDataList.filter(item => {
 				return item.goods_id !== pyload.goods_id
 			})
-			
+
 			uni.setStorageSync('cartDataList', JSON.stringify(state.cartDataList))
-			
+
 			this.commit('cart/SET_TABBARBADGE')
+		},
+
+		SET_ADDRESS(state, pyload) {
+			uni.setStorageSync('address', JSON.stringify(pyload))
+			state.address = pyload
+		},
+
+		SET_SELECTALL(state, pyload) {
+
+			state.cartDataList.forEach(item => {
+				item.goods_state = pyload
+			})
+
+			state.selectAll = pyload
+
+			uni.setStorageSync('selectAll', JSON.stringify(pyload))
+			uni.setStorageSync('cartDataList', JSON.stringify(state.cartDataList))
 		}
 
 

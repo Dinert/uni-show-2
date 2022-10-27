@@ -1,6 +1,6 @@
 <template>
-	<view>
-
+	<view class="my">
+		<my-login></my-login>
 	</view>
 </template>
 
@@ -24,5 +24,7 @@
 </script>
 
 <style lang="scss">
-
+	.my {
+		height: 100%;
+	}
 </style>
